@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  Inject,
 } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
@@ -14,7 +15,11 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Controller('api/person')
 export class PersonController {
-  constructor(private readonly personService: PersonService) {}
+  constructor(
+    private readonly personService: PersonService,
+    @Inject('person_mock') private readonly personMock: any,
+    @Inject('person_factory') private readonly personFactory: any,
+  ) {}
 
   @Post('create')
   create(@Body() createPersonDto: CreatePersonDto) {

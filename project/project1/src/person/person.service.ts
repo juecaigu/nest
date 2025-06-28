@@ -5,7 +5,6 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 @Injectable()
 export class PersonService {
   create(createPersonDto: CreatePersonDto) {
-    console.log(createPersonDto);
     return `This action adds a new person ${createPersonDto?.name} ${createPersonDto?.age}`;
   }
 
