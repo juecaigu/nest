@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <script>
+      axios.get('/api/person/1').then((res) => {
+        console.log(res.data);
+      });
+      axios
+        .get('/api/person/find', {
+          params: {
+            name: '复杂的中文字符',
+            age: 20,
+          },
+        })
+        .then((res) => {
+          console.log('find', res.data);
+        });
+    </script>
+  </body>
+</html>
