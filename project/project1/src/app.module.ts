@@ -6,9 +6,10 @@ import { LifeCycleModule } from './life-cycle/life-cycle.module';
 import { LoggerMiddleware } from './common/logger.middleware';
 import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { PersonController } from './person/person.controller';
+import { LoginModule } from './login/login.module';
 
 @Module({
-  imports: [PersonModule, LifeCycleModule],
+  imports: [PersonModule, LifeCycleModule, LoginModule],
   controllers: [AppController],
   providers: [AppService],
 })
