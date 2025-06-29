@@ -23,6 +23,7 @@ export class PersonController {
 
   @Post('create')
   create(@Body() createPersonDto: CreatePersonDto) {
+    console.log('handler');
     return this.personService.create(createPersonDto);
   }
 

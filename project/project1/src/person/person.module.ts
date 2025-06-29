@@ -31,5 +31,6 @@ const factoryPerson = {
     },
     factoryPerson,
   ],
+  exports: [PersonService],
 })
 export class PersonModule {}
