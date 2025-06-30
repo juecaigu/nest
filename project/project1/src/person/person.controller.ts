@@ -8,12 +8,16 @@ import {
   Delete,
   Query,
   Inject,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { TimeInterceptor } from 'src/time/time.interceptor';
+import { ValidationPipe } from 'src/common/validationPipe.pipe';
 
 @Controller('api/person')
+@UseInterceptors(TimeInterceptor)
 export class PersonController {
   constructor(
     private readonly personService: PersonService,
@@ -28,7 +32,10 @@ export class PersonController {
   }
 
   @Get('find')
-  findAll(@Query('name') name: string, @Query('age') age: number) {
+  findAll(
+    @Query('name') name: string,
+    @Query('age', ValidationPipe) age: number,
+  ) {
     return this.personService.find(name, age);
   }
 
