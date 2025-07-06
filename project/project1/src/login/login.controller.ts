@@ -9,7 +9,8 @@ export class LoginController {
   @Get('login')
   @UseGuards(LoginGuard)
   @SetMetadata('roles', ['admin'])
-  login() {
+  async login() {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     return 'login';
   }
 }
