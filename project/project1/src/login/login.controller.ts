@@ -1,6 +1,7 @@
-import { Controller, Get, SetMetadata, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, SetMetadata, UseGuards } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginGuard } from './login.guard';
+import { Request } from 'express';
 
 @Controller('api')
 export class LoginController {
@@ -9,8 +10,7 @@ export class LoginController {
   @Get('login')
   @UseGuards(LoginGuard)
   @SetMetadata('roles', ['admin'])
-  async login() {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    return 'login';
+  login(@Req() request: Request) {
+    return this.loginService.login(request);
   }
 }
