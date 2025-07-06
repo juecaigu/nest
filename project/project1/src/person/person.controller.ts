@@ -3,18 +3,19 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   Query,
   Inject,
   UseInterceptors,
+  ParseIntPipe,
+  HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
-import { UpdatePersonDto } from './dto/update-person.dto';
 import { TimeInterceptor } from 'src/time/time.interceptor';
 import { ValidationPipe } from 'src/common/validationPipe.pipe';
+import { CustomPipe } from 'src/common/custome.pipe';
 
 @Controller('api/person')
 @UseInterceptors(TimeInterceptor)
@@ -39,18 +40,23 @@ export class PersonController {
     return this.personService.find(name, age);
   }
 
+  @Get('delete')
+  remove(@Query('id', CustomPipe) id: number) {
+    return this.personService.remove(id);
+  }
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({
+        exceptionFactory: () => {
+          return new HttpException('must be a number', HttpStatus.BAD_REQUEST);
+        },
+      }),
+    )
+    id: number,
+  ) {
     return this.personService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
-    return this.personService.update(+id, updatePersonDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.personService.remove(+id);
   }
 }

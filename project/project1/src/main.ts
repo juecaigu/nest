@@ -1,12 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { TimeoutInterceptor } from './time/timeout.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useStaticAssets('public', { prefix: '/static' });
-  app.useGlobalInterceptors(new TimeoutInterceptor());
+  // app.useGlobalInterceptors(new TimeoutInterceptor());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
