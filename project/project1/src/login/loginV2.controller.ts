@@ -1,26 +1,19 @@
-import {
-  Controller,
-  Get,
-  Req,
-  SetMetadata,
-  UseGuards,
-  VERSION_NEUTRAL,
-} from '@nestjs/common';
+import { Controller, Get, SetMetadata, UseGuards } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginGuard } from './login.guard';
 import { Request } from 'express';
 
 @Controller({
   path: 'api',
-  version: VERSION_NEUTRAL,
+  version: '2',
 })
-export class LoginController {
+export class LoginV2Controller {
   constructor(private readonly loginService: LoginService) {}
 
   @Get('login')
   @UseGuards(LoginGuard)
   @SetMetadata('roles', ['admin'])
-  login(@Req() request: Request) {
-    return this.loginService.login(request);
+  login() {
+    return 'this is login v2';
   }
 }
