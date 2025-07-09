@@ -7,9 +7,10 @@ import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { PersonController } from './person/person.controller';
 import { LoginModule } from './login/login.module';
 import { CarMiddleware } from './middleware/car.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
-  imports: [PersonModule, LoginModule],
+  imports: [PersonModule, LoginModule, UploadModule],
   controllers: [AppController],
   providers: [AppService],
 })
