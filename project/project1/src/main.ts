@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: true,
+    logger: ['error', 'warn'], // logger = false
   });
   app.useStaticAssets('public', { prefix: '/static' });
   // app.useGlobalInterceptors(new TimeoutInterceptor());
