@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "启动nest",
       "skipFiles": ["<node_internals>/**"],
-      "cwd": "${workspaceFolder}/project/project1",
+      "cwd": "${workspaceFolder}/project/fileupload",
       "outFiles": ["${workspaceFolder}/**/*.js"],
       "runtimeExecutable": "pnpm",
       "args": ["run", "start:dev"],

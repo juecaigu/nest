@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <input type="file" id="file" />
+    <script>
+      const fileInput = document.getElementById('file')
+      const chunkSize = 10 * 1024
+      fileInput.onchange = async function () {
+        const file = fileInput.files[0]
+        const totalSize = file.size
+        const chunks = []
+        let startPos = 0
+        while (startPos < totalSize) {
+          chunks.push(file.slice(startPos, startPos + chunkSize))
+          startPos += chunkSize
+        }
+        const randomId = Math.random().toString(36).substring(2, 15)
+        for (let i = 0; i < chunks.length; i++) {
+          const formData = new FormData()
+          formData.set('name', randomId + '_' + file.name + '-' + i)
+          formData.append('file', chunks[i])
+          const res = await axios.post('http://localhost:3000/upload', formData)
+          console.log(`res${i}`, res)
+        }
+        await axios.post('http://localhost:3000/merge', {
+          name: randomId + '_' + file.name
+        })
+        alert('上传成功')
+      }
+    </script>
+  </body>
+</html>
