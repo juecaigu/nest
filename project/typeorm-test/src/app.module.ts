@@ -13,10 +13,10 @@ const configService = new ConfigService();
 
 const typeOrmModule = TypeOrmModule.forRoot({
   type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'jiang',
+  host: configService.get('host'),
+  port: configService.get('port'),
+  username: configService.get('username'),
+  password: configService.get('password'),
   database: 'typeorm_test',
   synchronize: false,
   logging: true,
