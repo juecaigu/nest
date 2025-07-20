@@ -4,8 +4,12 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import { User } from './user/entities/user.entity';
-import { City } from './city/entities/city.entity';
+// import { City } from './city/entities/city.entity';
 import { CityModule } from './city/city.module';
+import { ArticleModule } from './article/article.module';
+import { Article } from './article/entities/article.entity';
+import { ConfigService } from '@nestjs/config';
+const configService = new ConfigService();
 
 const typeOrmModule = TypeOrmModule.forRoot({
   type: 'mysql',
@@ -14,9 +18,9 @@ const typeOrmModule = TypeOrmModule.forRoot({
   username: 'root',
   password: 'jiang',
   database: 'typeorm_test',
-  synchronize: true,
+  synchronize: false,
   logging: true,
-  entities: [City],
+  entities: [Article],
   poolSize: 10,
   connectorPackage: 'mysql2',
   extra: {
@@ -25,7 +29,7 @@ const typeOrmModule = TypeOrmModule.forRoot({
 });
 
 @Module({
-  imports: [UserModule, typeOrmModule, CityModule],
+  imports: [UserModule, typeOrmModule, CityModule, ArticleModule],
   controllers: [AppController],
   providers: [AppService],
 })
