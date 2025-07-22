@@ -7,8 +7,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { City } from './city/entities/city.entity';
 import { CityModule } from './city/city.module';
 import { ArticleModule } from './article/article.module';
-import { Article } from './article/entities/article.entity';
+// import { Article } from './article/entities/article.entity';
 import { ConfigService } from '@nestjs/config';
+import { RoleModule } from './role/role.module';
+import { Role } from './role/entities/role.entity';
+import { JwtModule } from '@nestjs/jwt';
 const configService = new ConfigService();
 
 const typeOrmModule = TypeOrmModule.forRoot({
@@ -17,10 +20,10 @@ const typeOrmModule = TypeOrmModule.forRoot({
   port: configService.get('port'),
   username: configService.get('username'),
   password: configService.get('password'),
-  database: 'typeorm_test',
-  synchronize: false,
+  database: configService.get('database'),
+  synchronize: true,
   logging: true,
-  entities: [Article],
+  entities: [Role],
   poolSize: 10,
   connectorPackage: 'mysql2',
   extra: {
@@ -28,8 +31,21 @@ const typeOrmModule = TypeOrmModule.forRoot({
   },
 });
 
+const jwtModule = JwtModule.register({
+  global: true,
+  secret: 'jiang',
+  signOptions: { expiresIn: '1h' },
+});
+
 @Module({
-  imports: [UserModule, typeOrmModule, CityModule, ArticleModule],
+  imports: [
+    UserModule,
+    typeOrmModule,
+    CityModule,
+    ArticleModule,
+    RoleModule,
+    jwtModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
