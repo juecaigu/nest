@@ -4,27 +4,23 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
 } from 'typeorm';
-import { Permission } from './permission.entity';
 
 @Entity()
-export class Role {
+export class Permission {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
     length: 50,
-    comment: '用户名',
   })
-  username: string;
+  name: string;
 
   @Column({
-    length: 50,
-    comment: '密码',
+    length: 100,
+    nullable: true,
   })
-  password: string;
+  desc: string;
 
   @CreateDateColumn({
     comment: '创建时间',
@@ -35,10 +31,4 @@ export class Role {
     comment: '更新时间',
   })
   updateTime: Date;
-
-  @ManyToMany(() => Permission)
-  @JoinTable({
-    name: 'role_permission_relation',
-  })
-  permissions: Permission[];
 }

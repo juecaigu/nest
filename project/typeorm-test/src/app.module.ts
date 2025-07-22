@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import { User } from './user/entities/user.entity';
-// import { City } from './city/entities/city.entity';
+import { City } from './city/entities/city.entity';
 import { CityModule } from './city/city.module';
 import { ArticleModule } from './article/article.module';
 // import { Article } from './article/entities/article.entity';
@@ -12,6 +12,9 @@ import { ConfigService } from '@nestjs/config';
 import { RoleModule } from './role/role.module';
 import { Role } from './role/entities/role.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { Permission } from './role/entities/permission.entity';
+import { RedisModule } from './redis/redis.module';
+
 const configService = new ConfigService();
 
 const typeOrmModule = TypeOrmModule.forRoot({
@@ -23,7 +26,7 @@ const typeOrmModule = TypeOrmModule.forRoot({
   database: configService.get('database'),
   synchronize: true,
   logging: true,
-  entities: [Role],
+  entities: [Role, Permission, City],
   poolSize: 10,
   connectorPackage: 'mysql2',
   extra: {
@@ -45,6 +48,7 @@ const jwtModule = JwtModule.register({
     ArticleModule,
     RoleModule,
     jwtModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

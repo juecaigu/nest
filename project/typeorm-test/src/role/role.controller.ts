@@ -5,7 +5,6 @@ import {
   Post,
   Res,
   ValidationPipe,
-  UseGuards,
   Get,
 } from '@nestjs/common';
 import { RoleService } from './role.service';
@@ -13,7 +12,6 @@ import { RegistryDto } from './dto/registry.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-import { roleGuard } from './role.guard';
 
 @Controller('role')
 export class RoleController {
@@ -46,9 +44,8 @@ export class RoleController {
     return this.roleService.register(registryDto);
   }
 
-  @Get('test')
-  @UseGuards(roleGuard)
-  test() {
-    return 'test';
+  @Get('init')
+  init() {
+    return this.roleService.init();
   }
 }
